@@ -57,27 +57,5 @@ return {
     vim.opt.foldmethod = "expr"
     vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
     vim.opt.foldenable = false -- 默认不折叠（打开文件时展开所有代码）
-
-    -- 确保 treesitter 高亮自动启动
-    local ts_group = vim.api.nvim_create_augroup("TreesitterAutostart", { clear = true })
-    vim.api.nvim_create_autocmd({ "BufReadPost", "BufNewFile" }, {
-      group = ts_group,
-      callback = function()
-        -- 延迟启动以确保 treesitter 已完全加载
-        vim.schedule(function()
-          local buf = vim.api.nvim_get_current_buf()
-          -- 检查是否已经有高亮器
-          if not vim.treesitter.highlighter.active[buf] then
-            -- 尝试启动 treesitter
-            local ok = pcall(vim.treesitter.start, buf)
-            if not ok then
-              -- 如果启动失败，可能是因为该文件类型不支持
-              -- 静默失败，不显示错误
-            end
-          end
-        end)
-      end,
-      desc = "Auto start treesitter highlighting",
-    })
   end,
 }

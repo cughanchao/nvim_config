@@ -1,7 +1,7 @@
 return {
   {
     "stevearc/conform.nvim",
-    event = { "BufWritePre", "BufReadPre" },
+    event = { "BufWritePre" }, -- 只在保存前加载，不需要 BufReadPre
     cmd = { "ConformInfo" },
     keys = {
       {
@@ -60,7 +60,7 @@ return {
       },
       -- 保存时自动格式化
       format_on_save = {
-        timeout_ms = 4500, -- 增加到 4.5 秒，给 Black 足够的时间
+        timeout_ms = 2000, -- 2秒超时，平衡速度和可靠性
         lsp_fallback = true, -- 无 formatter 时回退到 LSP 格式化
       },
     },

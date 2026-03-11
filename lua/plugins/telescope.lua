@@ -36,11 +36,9 @@ return {
           preview_cutoff = 120,
         },
 
-        -- 预览器配置：禁用 treesitter 高亮以避免兼容性问题
+        -- 预览器配置：使用传统高亮避免兼容性问题
         preview = {
-          treesitter = {
-            enable = false, -- 禁用 treesitter 预览高亮，使用传统语法高亮
-          },
+          treesitter = false, -- 禁用 treesitter 预览，避免某些文件类型报错
         },
 
         -- 快捷键映射

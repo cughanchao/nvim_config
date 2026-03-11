@@ -45,7 +45,8 @@ return {
       "saghen/blink.cmp",
     },
     config = function()
-      local capabilities = require("blink.cmp").get_lsp_capabilities()
+      -- 获取 blink.cmp 的 capabilities，添加空值检查防止加载失败
+      local capabilities = require("blink.cmp").get_lsp_capabilities() or vim.lsp.protocol.make_client_capabilities()
 
       -- 配置 Lua LSP (lua_ls)
       -- 使用 Neovim 0.11+ 推荐的 vim.lsp.config API
@@ -82,8 +83,10 @@ return {
             analysis = {
               autoSearchPaths = true,
               useLibraryCodeForTypes = true,
-              diagnosticMode = "workspace",
-              typeCheckingMode = "basic",
+              diagnosticMode = "openFilesOnly", -- 只分析打开的文件，不分析整个workspace
+              typeCheckingMode = "basic", -- 关闭类型检查以提升性能（如需类型检查可改为 "basic"）
+              -- 忽略不需要分析的目录
+              ignore = { "**/node_modules", "**/__pycache__", "**/venv", "**/.venv" },
             },
             pythonPath = vim.fn.exepath("python3") or vim.fn.exepath("python"),
           },
