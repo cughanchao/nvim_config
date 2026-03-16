@@ -53,9 +53,7 @@ return {
       },
     })
 
-    -- 启用代码折叠（基于 treesitter）
-    vim.opt.foldmethod = "expr"
-    vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
-    vim.opt.foldenable = false -- 默认不折叠（打开文件时展开所有代码）
+    -- 折叠配置已移至 nvim-ufo 插件
+    -- nvim-ufo 会自动使用 treesitter 作为折叠提供者
   end,
 }
