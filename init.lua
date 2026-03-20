@@ -3,6 +3,9 @@ vim.opt.encoding = "UTF-8"
 -- vim.opt.fileencoding = "UTF-8"
 vim.opt.fileencodings = "utf-8,gbk,gb2312,gb18030"
 
+-- 添加 treesitter parser 目录到 runtimepath (必须在加载插件前设置)
+vim.opt.runtimepath:prepend(vim.fn.stdpath("data") .. "/site")
+
 vim.opt.number = true -- 显示绝对行号
 -- vim.opt.relativenumber = true -- 显示相对行号（方便跳转）
 vim.opt.cursorline = true -- 高亮光标所在行
@@ -55,6 +58,24 @@ vim.opt.splitbelow = true -- 在下方分屏
 vim.opt.splitright = true --  在右侧分屏
 
 vim.opt.clipboard = "unnamedplus"
+
+-- ===================== 文件类型检测配置 =====================
+-- 为某些扩展名和文件名设置正确的 filetype
+vim.filetype.add({
+  extension = {
+    h = "c", -- .h 文件默认识别为 C 头文件
+    hpp = "cpp", -- .hpp 文件识别为 C++ 头文件
+    cc = "cpp", -- .cc 文件识别为 C++ 源文件
+    yml = "yaml", -- .yml 识别为 YAML
+  },
+  filename = {
+    ["CMakeLists.txt"] = "cmake", -- CMakeLists.txt 识别为 cmake
+  },
+  pattern = {
+    [".*%.h"] = "c", -- 所有 .h 文件默认为 C（如需 C++，可手动切换）
+    [".*%.cmake"] = "cmake", -- .cmake 文件识别为 cmake
+  },
+})
 
 -- ===================== 不同文件类型的缩进配置 =====================
 local indent_settings = vim.api.nvim_create_augroup("IndentSettings", { clear = true })
